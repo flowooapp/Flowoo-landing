@@ -1,784 +1,620 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Flowoo — Gestão que flui</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&display=swap');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --green: #4ade80;
-      --cyan: #22d3ee;
-      --bg: #08090d;
-      --surface: #0f1117;
-      --border: #1a1f2e;
-      --text: #f0f2f8;
-      --muted: #4b5563;
-      --subtle: #9ca3af;
+      --bg: #0e0e0e;
+      --bg2: #161616;
+      --bg3: #1e1e1e;
+      --card: #1a1a1a;
+      --card2: #222222;
+      --amber: #f5a623;
+      --amber2: #e8941a;
+      --amber-dim: rgba(245,166,35,0.12);
+      --amber-glow: rgba(245,166,35,0.25);
+      --text: #f0f0f0;
+      --muted: #888;
+      --border: rgba(255,255,255,0.07);
     }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     html { scroll-behavior: smooth; }
 
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'DM Mono', monospace;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
       overflow-x: hidden;
     }
 
-    /* ── NOISE TEXTURE ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.4;
-    }
+    h1, h2, h3, .logo { font-family: 'Syne', sans-serif; }
 
-    /* ── GLOW BG ── */
-    .glow-bg {
-      position: fixed;
-      top: -20%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 800px;
-      height: 600px;
-      background: radial-gradient(ellipse, #4ade8012 0%, #22d3ee08 40%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* ── NAV ── */
+    /* NAV */
     nav {
       position: fixed;
-      top: 0;
-      width: 100%;
+      top: 0; left: 0; right: 0;
       z-index: 100;
-      padding: 20px 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid transparent;
-      transition: all 0.3s;
-      backdrop-filter: blur(0px);
+      padding: 20px 5%;
+      background: rgba(14,14,14,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
     }
 
-    nav.scrolled {
-      border-bottom-color: var(--border);
-      backdrop-filter: blur(20px);
-      background: rgba(8,9,13,0.8);
-    }
-
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--amber);
+      letter-spacing: -0.5px;
       text-decoration: none;
     }
 
-    .nav-logo svg { width: 36px; height: 20px; }
-
-    .nav-logo-text {
-      font-family: 'Playfair Display', serif;
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: -0.5px;
-    }
-
-    .nav-logo-text span { color: var(--green); }
-
-    nav ul {
+    .nav-links {
       display: flex;
       gap: 32px;
       list-style: none;
     }
 
-    nav ul a {
+    .nav-links a {
       color: var(--muted);
       text-decoration: none;
-      font-size: 12px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      font-size: 0.875rem;
+      font-weight: 500;
       transition: color 0.2s;
     }
 
-    nav ul a:hover { color: var(--text); }
+    .nav-links a:hover { color: var(--text); }
 
     .nav-cta {
-      background: var(--green);
-      color: #0a0a0f !important;
-      padding: 8px 20px;
-      border-radius: 6px;
-      font-weight: 500;
+      background: var(--amber);
+      color: #000;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.875rem;
+      text-decoration: none;
+      font-family: 'Syne', sans-serif;
+      transition: background 0.2s, transform 0.15s;
     }
+    .nav-cta:hover { background: var(--amber2); transform: translateY(-1px); }
 
-    /* ── HERO ── */
+    /* HERO */
     .hero {
-      position: relative;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 120px 40px 80px;
-      z-index: 1;
+      padding: 120px 5% 80px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .hero-badge {
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(245,166,35,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      border: 1px solid var(--green);
-      border-radius: 99px;
+      background: var(--amber-dim);
+      border: 1px solid rgba(245,166,35,0.3);
+      color: var(--amber);
       padding: 6px 16px;
-      font-size: 11px;
-      color: var(--green);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 40px;
-      animation: fadeUp 0.8s ease both;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 28px;
+      font-family: 'Syne', sans-serif;
+      letter-spacing: 0.5px;
     }
 
-    .badge-dot {
-      width: 6px;
-      height: 6px;
+    .badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--amber);
       border-radius: 50%;
-      background: var(--green);
-      animation: pulse 2s ease infinite;
+      animation: pulse 2s infinite;
     }
 
     @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(1.3); }
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
     }
 
     .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(52px, 8vw, 110px);
-      font-weight: 900;
-      line-height: 0.95;
-      letter-spacing: -3px;
-      margin-bottom: 32px;
-      animation: fadeUp 0.8s ease 0.1s both;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+      max-width: 820px;
     }
 
-    .hero h1 .line1 { display: block; color: var(--text); }
-    .hero h1 .line2 {
-      display: block;
-      background: linear-gradient(135deg, var(--green), var(--cyan));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .hero h1 span { color: var(--amber); }
+
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 40px;
+      font-weight: 400;
     }
 
-    .hero-sub {
-      font-size: 15px;
-      color: var(--subtle);
-      max-width: 480px;
-      line-height: 1.8;
-      margin-bottom: 48px;
-      animation: fadeUp 0.8s ease 0.2s both;
-      letter-spacing: 0.3px;
-    }
-
-    .hero-actions {
+    .hero-btns {
       display: flex;
-      gap: 16px;
-      align-items: center;
-      animation: fadeUp 0.8s ease 0.3s both;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--green), var(--cyan));
-      color: #08090d;
-      padding: 16px 36px;
-      border-radius: 8px;
-      font-family: 'DM Mono', monospace;
-      font-size: 13px;
-      font-weight: 500;
+      background: var(--amber);
+      color: #000;
+      padding: 14px 30px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
       text-decoration: none;
-      letter-spacing: 0.5px;
+      font-family: 'Syne', sans-serif;
       transition: all 0.2s;
-      border: none;
-      cursor: pointer;
+      box-shadow: 0 0 30px var(--amber-glow);
     }
+    .btn-primary:hover { background: var(--amber2); transform: translateY(-2px); box-shadow: 0 0 40px rgba(245,166,35,0.4); }
 
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px #4ade8033; }
-
-    .btn-ghost {
-      color: var(--subtle);
-      font-size: 13px;
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      padding: 14px 30px;
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: 1rem;
       text-decoration: none;
-      letter-spacing: 0.5px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: color 0.2s;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
     }
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); }
 
-    .btn-ghost:hover { color: var(--text); }
-
-    /* ── FLOW LINE HERO ── */
-    .flow-line {
-      margin-top: 80px;
-      animation: fadeUp 0.8s ease 0.4s both;
-    }
-
-    /* ── STATS ── */
+    /* STATS */
     .stats {
-      position: relative;
-      z-index: 1;
       display: flex;
-      justify-content: center;
       gap: 0;
-      padding: 60px 40px;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+      justify-content: center;
+      margin-top: 64px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--card);
+      max-width: 600px;
+      width: 100%;
     }
 
     .stat {
+      flex: 1;
+      padding: 24px 20px;
       text-align: center;
-      padding: 0 60px;
       border-right: 1px solid var(--border);
     }
-
     .stat:last-child { border-right: none; }
 
     .stat-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 48px;
-      font-weight: 900;
-      background: linear-gradient(135deg, var(--green), var(--cyan));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1;
-      margin-bottom: 8px;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--amber);
+      display: block;
     }
 
     .stat-label {
-      font-size: 11px;
+      font-size: 0.75rem;
       color: var(--muted);
-      letter-spacing: 2px;
-      text-transform: uppercase;
+      margin-top: 4px;
+      line-height: 1.3;
     }
 
-    /* ── SECTION ── */
+    /* SECTION */
     section {
-      position: relative;
-      z-index: 1;
-      padding: 100px 40px;
+      padding: 100px 5%;
       max-width: 1100px;
       margin: 0 auto;
     }
 
-    .section-tag {
-      font-size: 11px;
-      color: var(--green);
-      letter-spacing: 3px;
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--amber);
       text-transform: uppercase;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .section-tag::before {
-      content: '';
-      width: 24px;
-      height: 1px;
-      background: var(--green);
+      font-family: 'Syne', sans-serif;
+      margin-bottom: 16px;
     }
 
     .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(36px, 5vw, 64px);
-      font-weight: 900;
-      line-height: 1.05;
-      letter-spacing: -2px;
-      margin-bottom: 20px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
     }
 
     .section-sub {
-      font-size: 14px;
-      color: var(--subtle);
-      line-height: 1.8;
-      max-width: 520px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 480px;
       margin-bottom: 60px;
     }
 
-    /* ── FEATURES GRID ── */
+    /* FEATURES GRID */
     .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
+      gap: 16px;
     }
 
     .feature-card {
-      background: var(--surface);
-      padding: 40px;
-      transition: background 0.2s;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      transition: border-color 0.3s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
     }
 
-    .feature-card:hover { background: #13161f; }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--amber), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(245,166,35,0.3);
+      transform: translateY(-3px);
+    }
+
+    .feature-card:hover::before { opacity: 1; }
 
     .feature-icon {
-      width: 48px;
-      height: 48px;
+      width: 48px; height: 48px;
+      background: var(--amber-dim);
       border-radius: 12px;
-      background: linear-gradient(135deg, #4ade8015, #22d3ee10);
-      border: 1px solid #4ade8022;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 24px;
-      font-size: 22px;
+      font-size: 1.4rem;
+      margin-bottom: 18px;
     }
 
-    .feature-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 20px;
+    .feature-card h3 {
+      font-size: 1rem;
       font-weight: 700;
-      margin-bottom: 12px;
-      color: var(--text);
+      margin-bottom: 10px;
+      font-family: 'Syne', sans-serif;
     }
 
-    .feature-desc {
-      font-size: 13px;
-      color: var(--subtle);
-      line-height: 1.8;
+    .feature-card p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.6;
     }
 
-    /* ── COMO FUNCIONA ── */
+    /* STEPS */
     .steps {
       display: flex;
       flex-direction: column;
       gap: 0;
+      position: relative;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      left: 28px; top: 48px; bottom: 48px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--amber), transparent);
     }
 
     .step {
       display: flex;
-      gap: 48px;
+      gap: 28px;
       align-items: flex-start;
-      padding: 48px 0;
+      padding: 32px 0;
       border-bottom: 1px solid var(--border);
     }
-
     .step:last-child { border-bottom: none; }
 
     .step-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 80px;
-      font-weight: 900;
-      color: var(--border);
-      line-height: 1;
-      min-width: 80px;
-      letter-spacing: -3px;
+      width: 56px; height: 56px;
+      background: var(--amber);
+      color: #000;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
     }
 
     .step-content h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 28px;
+      font-size: 1.15rem;
       font-weight: 700;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
+      font-family: 'Syne', sans-serif;
     }
 
     .step-content p {
-      font-size: 13px;
-      color: var(--subtle);
-      line-height: 1.8;
-      max-width: 520px;
+      color: var(--muted);
+      font-size: 0.9rem;
     }
 
-    /* ── PÚBLICO ── */
+    /* AUDIENCE */
     .audience-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
     }
 
     .audience-card {
+      background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 28px 24px;
-      background: var(--surface);
+      border-radius: 16px;
+      padding: 20px 16px;
       text-align: center;
-      transition: all 0.2s;
+      transition: border-color 0.2s, background 0.2s;
+      cursor: default;
     }
 
     .audience-card:hover {
-      border-color: #4ade8033;
-      background: #0d1f12;
+      border-color: rgba(245,166,35,0.35);
+      background: var(--amber-dim);
     }
 
-    .audience-emoji { font-size: 32px; margin-bottom: 12px; }
+    .audience-emoji { font-size: 1.8rem; display: block; margin-bottom: 10px; }
+    .audience-name { font-size: 0.85rem; font-weight: 600; font-family: 'Syne', sans-serif; }
 
-    .audience-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text);
+    /* WAITLIST */
+    .waitlist-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 5% 100px;
     }
 
-    /* ── CTA FINAL ── */
-    .cta-section {
-      position: relative;
-      z-index: 1;
+    .waitlist-box {
+      background: var(--card);
+      border: 1px solid rgba(245,166,35,0.25);
+      border-radius: 28px;
+      padding: 64px 48px;
       text-align: center;
-      padding: 120px 40px;
-      border-top: 1px solid var(--border);
+      position: relative;
       overflow: hidden;
     }
 
-    .cta-glow {
+    .waitlist-box::before {
+      content: '';
       position: absolute;
-      bottom: -100px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 600px;
-      height: 400px;
-      background: radial-gradient(ellipse, #4ade8015 0%, transparent 70%);
+      top: -100px; left: 50%; transform: translateX(-50%);
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(245,166,35,0.12) 0%, transparent 70%);
       pointer-events: none;
     }
 
-    .cta-section h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(40px, 6vw, 80px);
-      font-weight: 900;
-      letter-spacing: -2px;
-      margin-bottom: 20px;
-      line-height: 1;
-    }
-
-    .cta-section p {
-      font-size: 14px;
-      color: var(--subtle);
-      margin-bottom: 48px;
-      line-height: 1.8;
-    }
-
-    .waitlist-form {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      max-width: 480px;
-      margin: 0 auto;
-    }
-
-    .waitlist-input {
-      flex: 1;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 14px 20px;
-      color: var(--text);
-      font-family: 'DM Mono', monospace;
-      font-size: 13px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .waitlist-input:focus { border-color: #4ade8044; }
-    .waitlist-input::placeholder { color: var(--muted); }
-
-    /* ── FOOTER ── */
-    footer {
+    .waitlist-box h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
       position: relative;
-      z-index: 1;
+    }
+
+    .waitlist-box p {
+      color: var(--muted);
+      margin-bottom: 36px;
+      font-size: 1rem;
+      position: relative;
+    }
+
+    /* FOOTER */
+    footer {
       border-top: 1px solid var(--border);
-      padding: 40px;
+      padding: 32px 5%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-    }
-
-    footer p {
-      font-size: 12px;
+      flex-wrap: wrap;
+      gap: 16px;
       color: var(--muted);
-      letter-spacing: 0.5px;
+      font-size: 0.85rem;
     }
 
-    /* ── ANIMATIONS ── */
+    footer .logo { font-size: 1.1rem; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .steps::before { display: none; }
+      .waitlist-box { padding: 40px 24px; }
+    }
+
+    /* ANIMATIONS */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes flowDraw {
-      from { stroke-dashoffset: 600; }
-      to { stroke-dashoffset: 0; }
+    .hero > * {
+      animation: fadeUp 0.7s ease both;
     }
-
-    .flow-svg path {
-      stroke-dasharray: 600;
-      stroke-dashoffset: 600;
-      animation: flowDraw 2s ease 0.6s forwards;
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      nav ul { display: none; }
-      .stats { flex-direction: column; gap: 40px; }
-      .stat { border-right: none; border-bottom: 1px solid var(--border); padding: 0 0 40px; }
-      .stat:last-child { border-bottom: none; }
-      .step { flex-direction: column; gap: 16px; }
-      .step-num { font-size: 48px; }
-      .waitlist-form { flex-direction: column; }
-      footer { flex-direction: column; gap: 16px; text-align: center; }
-      nav { padding: 20px; }
-    }
+    .hero > *:nth-child(1) { animation-delay: 0.1s; }
+    .hero > *:nth-child(2) { animation-delay: 0.2s; }
+    .hero > *:nth-child(3) { animation-delay: 0.3s; }
+    .hero > *:nth-child(4) { animation-delay: 0.4s; }
+    .hero > *:nth-child(5) { animation-delay: 0.5s; }
   </style>
 </head>
 <body>
 
-<div class="glow-bg"></div>
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="logo">Flowoo</a>
+    <ul class="nav-links">
+      <li><a href="#funcionalidades">Funcionalidades</a></li>
+      <li><a href="#como-funciona">Como funciona</a></li>
+      <li><a href="#publico">Para quem</a></li>
+    </ul>
+    <a href="#waitlist" class="nav-cta">Lista de espera</a>
+  </nav>
 
-<!-- NAV -->
-<nav id="nav">
-  <a href="#" class="nav-logo">
-    <svg viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M 5 20 C 20 5, 35 5, 50 20 C 65 35, 80 35, 95 20 C 105 10, 112 10, 118 20"
-            fill="none" stroke="url(#ng)" stroke-width="3.5" stroke-linecap="round"/>
-      <circle cx="5" cy="20" r="4" fill="#4ade80"/>
-      <circle cx="118" cy="20" r="3" fill="#22d3ee" opacity="0.8"/>
-      <circle cx="118" cy="20" r="7" fill="none" stroke="#22d3ee" stroke-width="1" opacity="0.3"/>
-      <defs>
-        <linearGradient id="ng" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#4ade80"/>
-          <stop offset="100%" stop-color="#22d3ee"/>
-        </linearGradient>
-      </defs>
-    </svg>
-    <span class="nav-logo-text">Flow<span>oo</span></span>
-  </a>
-  <ul>
-    <li><a href="#funcionalidades">Funcionalidades</a></li>
-    <li><a href="#como-funciona">Como funciona</a></li>
-    <li><a href="#publico">Para quem</a></li>
-    <li><a href="#waitlist" class="nav-cta">Lista de espera</a></li>
-  </ul>
-</nav>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-badge">
-    <div class="badge-dot"></div>
-    Em desenvolvimento · Agosto 2025
-  </div>
-
-  <h1>
-    <span class="line1">Gestão</span>
-    <span class="line2">que flui.</span>
-  </h1>
-
-  <p class="hero-sub">
-    Agenda, cobranças, nota fiscal e controle financeiro num app só.
-    Feito para profissionais autônomos de saúde e bem-estar.
-  </p>
-
-  <div class="hero-actions">
-    <a href="#waitlist" class="btn-primary">Entrar na lista de espera</a>
-    <a href="#como-funciona" class="btn-ghost">Ver como funciona →</a>
-  </div>
-
-  <div class="flow-line">
-    <svg class="flow-svg" width="500" height="60" viewBox="0 0 500 60" fill="none">
-      <path d="M 10 30 C 50 5, 90 5, 130 30 C 170 55, 210 55, 250 30 C 290 5, 330 5, 370 30 C 400 48, 420 48, 440 30 C 455 18, 465 18, 480 30"
-            stroke="url(#hg)" stroke-width="3" stroke-linecap="round"/>
-      <circle cx="10" cy="30" r="5" fill="#4ade80"/>
-      <circle cx="480" cy="30" r="4" fill="#22d3ee" opacity="0.8"/>
-      <circle cx="480" cy="30" r="9" fill="none" stroke="#22d3ee" stroke-width="1.5" opacity="0.3"/>
-      <circle cx="480" cy="30" r="15" fill="none" stroke="#22d3ee" stroke-width="1" opacity="0.15"/>
-      <defs>
-        <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#4ade80"/>
-          <stop offset="100%" stop-color="#22d3ee"/>
-        </linearGradient>
-      </defs>
-    </svg>
-  </div>
-</div>
-
-<!-- STATS -->
-<div class="stats">
-  <div class="stat">
-    <div class="stat-num">+500k</div>
-    <div class="stat-label">Autônomos de saúde no Brasil</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">4+</div>
-    <div class="stat-label">Apps que o profissional usa hoje</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">1</div>
-    <div class="stat-label">App pra substituir todos</div>
-  </div>
-</div>
-
-<!-- FUNCIONALIDADES -->
-<section id="funcionalidades">
-  <div class="section-tag">Funcionalidades</div>
-  <h2 class="section-title">Tudo que você<br/>precisa, num lugar.</h2>
-  <p class="section-sub">Chega de alternar entre 4 apps diferentes. O Flowoo centraliza tudo que um profissional autônomo precisa pra gerir o negócio.</p>
-
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon">📅</div>
-      <div class="feature-title">Agenda inteligente</div>
-      <p class="feature-desc">Lembretes automáticos para pacientes, confirmação de consulta e visualização da semana toda. Sem WhatsApp manual.</p>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="badge">Em desenvolvimento · Agosto 2025</div>
+    <h1>Gestão que <span>flui.</span></h1>
+    <p>Agenda, cobranças, nota fiscal e controle financeiro num app só. Feito para profissionais autônomos de saúde e bem-estar.</p>
+    <div class="hero-btns">
+      <a href="#waitlist" class="btn-primary">Entrar na lista de espera</a>
+      <a href="#como-funciona" class="btn-secondary">Ver como funciona →</a>
     </div>
-    <div class="feature-card">
-      <div class="feature-icon">💰</div>
-      <div class="feature-title">Cobranças automáticas</div>
-      <p class="feature-desc">O app cobra por você. Sem aquela conversa constrangedora. Receba via Pix, cartão ou boleto direto pelo app.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🧾</div>
-      <div class="feature-title">Receita Saúde integrado</div>
-      <p class="feature-desc">Emissão automática de recibos no Receita Saúde após cada atendimento. Sem abrir outro app.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">📊</div>
-      <div class="feature-title">Financeiro em tempo real</div>
-      <p class="feature-desc">Quanto você vai receber esse mês, quem deve, quanto de imposto. Tudo visível num dashboard simples.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🤖</div>
-      <div class="feature-title">Assistente com IA</div>
-      <p class="feature-desc">O app te avisa proativamente. "João não pagou." "Você tem janela livre quinta." "Vale abrir CNPJ agora."</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🏢</div>
-      <div class="feature-title">NFS-e para PJ</div>
-      <p class="feature-desc">Tem CNPJ? Emita nota fiscal de serviço automaticamente após cada atendimento. Integrado com centenas de prefeituras.</p>
-    </div>
-  </div>
-</section>
-
-<!-- COMO FUNCIONA -->
-<section id="como-funciona">
-  <div class="section-tag">Como funciona</div>
-  <h2 class="section-title">Simples como<br/>deve ser.</h2>
-
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">01</div>
-      <div class="step-content">
-        <h3>Cadastre seus pacientes e serviços</h3>
-        <p>Em minutos você importa sua agenda atual e cadastra seus serviços. O Flowoo aprende sua rotina e começa a automatizar.</p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-num">+500k</span>
+        <span class="stat-label">Autônomos de saúde no Brasil</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">4+</span>
+        <span class="stat-label">Apps que o profissional usa hoje</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1</span>
+        <span class="stat-label">App pra substituir todos</span>
       </div>
     </div>
-    <div class="step">
-      <div class="step-num">02</div>
-      <div class="step-content">
-        <h3>Atenda normalmente</h3>
-        <p>O app cuida da parte chata: confirma o paciente, emite o recibo, registra o pagamento e atualiza seu financeiro automaticamente.</p>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="funcionalidades">
+    <div class="section-label">Funcionalidades</div>
+    <h2 class="section-title">Tudo que você precisa,<br/>num lugar.</h2>
+    <p class="section-sub">Chega de alternar entre 4 apps diferentes. O Flowoo centraliza tudo que um profissional autônomo precisa pra gerir o negócio.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📅</div>
+        <h3>Agenda inteligente</h3>
+        <p>Lembretes automáticos para pacientes, confirmação de consulta e visualização da semana toda. Sem WhatsApp manual.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <h3>Cobranças automáticas</h3>
+        <p>O app cobra por você. Sem aquela conversa constrangedora. Receba via Pix, cartão ou boleto direto pelo app.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧾</div>
+        <h3>Receita Saúde integrado</h3>
+        <p>Emissão automática de recibos no Receita Saúde após cada atendimento. Sem abrir outro app.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Financeiro em tempo real</h3>
+        <p>Quanto você vai receber esse mês, quem deve, quanto de imposto. Tudo visível num dashboard simples.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <h3>Assistente com IA</h3>
+        <p>O app te avisa proativamente. "João não pagou." "Você tem janela livre quinta." "Vale abrir CNPJ agora."</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏢</div>
+        <h3>NFS-e para PJ</h3>
+        <p>Tem CNPJ? Emita nota fiscal de serviço automaticamente após cada atendimento. Integrado com centenas de prefeituras.</p>
       </div>
     </div>
-    <div class="step">
-      <div class="step-num">03</div>
-      <div class="step-content">
-        <h3>Acompanhe tudo no dashboard</h3>
-        <p>Quanto faturou, quem deve, quanto de imposto, quando bate a meta. O assistente com IA te avisa quando algo precisa da sua atenção.</p>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="como-funciona">
+    <div class="section-label">Como funciona</div>
+    <h2 class="section-title">Simples como<br/>deve ser.</h2>
+    <p class="section-sub">Três passos e você já está gerindo seu negócio sem esforço.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3>Cadastre seus pacientes e serviços</h3>
+          <p>Em minutos você importa sua agenda atual e cadastra seus serviços. O Flowoo aprende sua rotina e começa a automatizar.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3>Atenda normalmente</h3>
+          <p>O app cuida da parte chata: confirma o paciente, emite o recibo, registra o pagamento e atualiza seu financeiro automaticamente.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3>Acompanhe tudo no dashboard</h3>
+          <p>Quanto faturou, quem deve, quanto de imposto, quando bate a meta. O assistente com IA te avisa quando algo precisa da sua atenção.</p>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- PÚBLICO -->
-<section id="publico">
-  <div class="section-tag">Para quem</div>
-  <h2 class="section-title">Feito para quem<br/>trabalha por conta própria.</h2>
-  <p class="section-sub">Qualquer profissional de saúde e bem-estar autônomo. Se você atende, cobra e emite documento fiscal — o Flowoo é pra você.</p>
+  <!-- AUDIENCE -->
+  <section id="publico">
+    <div class="section-label">Para quem</div>
+    <h2 class="section-title">Feito para quem<br/>trabalha por conta própria.</h2>
+    <p class="section-sub">Qualquer profissional de saúde e bem-estar autônomo. Se você atende, cobra e emite documento fiscal — o Flowoo é pra você.</p>
+    <div class="audience-grid">
+      <div class="audience-card"><span class="audience-emoji">🧠</span><span class="audience-name">Psicólogos</span></div>
+      <div class="audience-card"><span class="audience-emoji">🦷</span><span class="audience-name">Dentistas</span></div>
+      <div class="audience-card"><span class="audience-emoji">🏃</span><span class="audience-name">Personal Trainers</span></div>
+      <div class="audience-card"><span class="audience-emoji">🥗</span><span class="audience-name">Nutricionistas</span></div>
+      <div class="audience-card"><span class="audience-emoji">💆</span><span class="audience-name">Fisioterapeutas</span></div>
+      <div class="audience-card"><span class="audience-emoji">🗣️</span><span class="audience-name">Fonoaudiólogos</span></div>
+      <div class="audience-card"><span class="audience-emoji">🧘</span><span class="audience-name">Terapeutas</span></div>
+      <div class="audience-card"><span class="audience-emoji">💼</span><span class="audience-name">Coaches</span></div>
+    </div>
+  </section>
 
-  <div class="audience-grid">
-    <div class="audience-card">
-      <div class="audience-emoji">🧠</div>
-      <div class="audience-name">Psicólogos</div>
-    </div>
-    <div class="audience-card">
-      <div class="audience-emoji">🦷</div>
-      <div class="audience-name">Dentistas</div>
-    </div>
-    <div class="audience-card">
-      <div class="audience-emoji">🏃</div>
-      <div class="audience-name">Personal Trainers</div>
-    </div>
-    <div class="audience-card">
-      <div class="audience-emoji">🥗</div>
-      <div class="audience-name">Nutricionistas</div>
-    </div>
-    <div class="audience-card">
-      <div class="audience-emoji">💆</div>
-      <div class="audience-name">Fisioterapeutas</div>
-    </div>
-    <div class="audience-card">
-      <div class="audience-emoji">🗣️</div>
-      <div class="audience-name">Fonoaudiólogos</div>
-    </div>
-    <div class="audience-card">
-      <div class="audience-emoji">🧘</div>
-      <div class="audience-name">Terapeutas</div>
-    </div>
-    <div class="audience-card">
-      <div class="audience-emoji">💼</div>
-      <div class="audience-name">Coaches</div>
+  <!-- WAITLIST -->
+  <div class="waitlist-section" id="waitlist">
+    <div class="waitlist-box">
+      <h2>Entre na<br/><span style="color:var(--amber)">lista de espera.</span></h2>
+      <p>Seja um dos primeiros a usar o Flowoo.<br/>Acesso antecipado e preço especial pra quem entrar agora.</p>
+      <a href="#" class="btn-primary">Quero entrar →</a>
     </div>
   </div>
-</section>
 
-<!-- CTA -->
-<div class="cta-section" id="waitlist">
-  <div class="cta-glow"></div>
-  <h2>Entre na<br/>lista de espera.</h2>
-  <p>Seja um dos primeiros a usar o Flowoo.<br/>Acesso antecipado e preço especial pra quem entrar agora.</p>
-  <div class="waitlist-form">
-    <input class="waitlist-input" type="email" placeholder="seu@email.com"/>
-    <a href="#" class="btn-primary">Quero entrar</a>
-  </div>
-</div>
-
-<!-- FOOTER -->
-<footer>
-  <p>© 2025 Flowoo · Gestão que flui</p>
-  <p>flowoo.com.br</p>
-</footer>
-
-<script>
-  // Nav scroll
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 50);
-  });
-
-  // Waitlist form
-  document.querySelector('.waitlist-form').addEventListener('click', (e) => {
-    if (e.target.tagName === 'A') {
-      e.preventDefault();
-      const input = document.querySelector('.waitlist-input');
-      if (input.value.includes('@')) {
-        input.value = '';
-        input.placeholder = '✓ Você está na lista!';
-        input.style.borderColor = '#4ade8044';
-        input.style.color = '#4ade80';
-      } else {
-        input.style.borderColor = '#f8717144';
-        input.placeholder = 'Digite um email válido';
-      }
-    }
-  });
-</script>
+  <!-- FOOTER -->
+  <footer>
+    <a href="#" class="logo">Flowoo</a>
+    <span>© 2025 Flowoo · Gestão que flui</span>
+    <span>flowoo.com.br</span>
+  </footer>
 
 </body>
 </html>
