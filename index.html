@@ -292,11 +292,7 @@
       transition: opacity 0.3s;
     }
 
-    .feature-card:hover {
-      border-color: rgba(245,166,35,0.3);
-      transform: translateY(-3px);
-    }
-
+    .feature-card:hover { border-color: rgba(245,166,35,0.3); transform: translateY(-3px); }
     .feature-card:hover::before { opacity: 1; }
 
     .feature-icon {
@@ -317,19 +313,10 @@
       font-family: 'Syne', sans-serif;
     }
 
-    .feature-card p {
-      font-size: 0.875rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
+    .feature-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.6; }
 
     /* STEPS */
-    .steps {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      position: relative;
-    }
+    .steps { display: flex; flex-direction: column; gap: 0; position: relative; }
 
     .steps::before {
       content: '';
@@ -364,17 +351,8 @@
       z-index: 1;
     }
 
-    .step-content h3 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-      font-family: 'Syne', sans-serif;
-    }
-
-    .step-content p {
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
+    .step-content h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; font-family: 'Syne', sans-serif; }
+    .step-content p { color: var(--muted); font-size: 0.9rem; }
 
     /* AUDIENCE */
     .audience-grid {
@@ -393,15 +371,11 @@
       cursor: default;
     }
 
-    .audience-card:hover {
-      border-color: rgba(245,166,35,0.35);
-      background: var(--amber-dim);
-    }
-
+    .audience-card:hover { border-color: rgba(245,166,35,0.35); background: var(--amber-dim); }
     .audience-emoji { font-size: 1.8rem; display: block; margin-bottom: 10px; }
     .audience-name { font-size: 0.85rem; font-weight: 600; font-family: 'Syne', sans-serif; }
 
-    /* WAITLIST */
+    /* WAITLIST SECTION */
     .waitlist-section {
       max-width: 1100px;
       margin: 0 auto;
@@ -435,7 +409,7 @@
       position: relative;
     }
 
-    .waitlist-box p {
+    .waitlist-box > p {
       color: var(--muted);
       margin-bottom: 36px;
       font-size: 1rem;
@@ -457,87 +431,40 @@
 
     footer .logo { font-size: 1.1rem; }
 
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .steps::before { display: none; }
-      .waitlist-box { padding: 40px 24px; }
-    }
-
-    /* ANIMATIONS */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .hero > * {
-      animation: fadeUp 0.7s ease both;
-    }
-    .hero > *:nth-child(1) { animation-delay: 0.1s; }
-    .hero > *:nth-child(2) { animation-delay: 0.2s; }
-    .hero > *:nth-child(3) { animation-delay: 0.3s; }
-    .hero > *:nth-child(4) { animation-delay: 0.4s; }
-    .hero > *:nth-child(5) { animation-delay: 0.5s; }
-
     /* MODAL */
     .modal-overlay {
       display: none;
       position: fixed;
       inset: 0;
       z-index: 999;
-      background: rgba(0,0,0,0.75);
-      backdrop-filter: blur(8px);
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(10px);
       align-items: center;
       justify-content: center;
       padding: 20px;
-      animation: fadeIn 0.2s ease;
     }
 
-    .modal-overlay.active {
-      display: flex;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+    .modal-overlay.active { display: flex; }
 
     .modal {
       background: var(--card);
-      border: 1px solid rgba(245,166,35,0.25);
-      border-radius: 24px;
+      border: 1px solid rgba(245,166,35,0.3);
+      border-radius: 28px;
       width: 100%;
-      max-width: 560px;
-      max-height: 90vh;
-      overflow: hidden;
+      max-width: 480px;
       position: relative;
-      animation: slideUp 0.3s ease;
-      display: flex;
-      flex-direction: column;
+      animation: slideUp 0.35s cubic-bezier(0.16,1,0.3,1);
+      overflow: hidden;
     }
 
     @keyframes slideUp {
-      from { opacity: 0; transform: translateY(32px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 24px;
-      border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
-    }
-
-    .modal-header span {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--amber);
+      from { opacity: 0; transform: translateY(40px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     .modal-close {
+      position: absolute;
+      top: 16px; right: 16px;
       width: 32px; height: 32px;
       background: var(--bg3);
       border: 1px solid var(--border);
@@ -547,25 +474,195 @@
       justify-content: center;
       cursor: pointer;
       color: var(--muted);
-      font-size: 1rem;
+      font-size: 0.9rem;
       transition: all 0.2s;
-      line-height: 1;
+      z-index: 2;
     }
-    .modal-close:hover { background: var(--amber-dim); color: var(--amber); border-color: rgba(245,166,35,0.3); }
+    .modal-close:hover { background: rgba(245,166,35,0.15); color: var(--amber); border-color: rgba(245,166,35,0.4); }
 
-    .modal-body {
-      flex: 1;
-      overflow-y: auto;
-      min-height: 400px;
+    /* FORM INSIDE MODAL */
+    .modal-inner {
+      padding: 44px 40px 40px;
     }
 
-    .modal-body iframe {
-      width: 100%;
-      height: 100%;
-      min-height: 500px;
-      border: none;
+    .modal-icon {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
       display: block;
     }
+
+    .modal-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .modal-title span { color: var(--amber); }
+
+    .modal-desc {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: 'Syne', sans-serif;
+      color: var(--muted);
+      margin-bottom: 7px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 13px 16px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      appearance: none;
+    }
+
+    .field input::placeholder { color: #555; }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: rgba(245,166,35,0.5);
+      box-shadow: 0 0 0 3px rgba(245,166,35,0.08);
+    }
+
+    .field select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+
+    .field select option { background: #1a1a1a; color: var(--text); }
+
+    .submit-btn {
+      width: 100%;
+      background: var(--amber);
+      color: #000;
+      border: none;
+      border-radius: 50px;
+      padding: 15px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: all 0.2s;
+      box-shadow: 0 0 24px rgba(245,166,35,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .submit-btn:hover { background: var(--amber2); transform: translateY(-1px); box-shadow: 0 0 36px rgba(245,166,35,0.45); }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .form-note {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #555;
+      margin-top: 14px;
+    }
+
+    /* SUCCESS STATE */
+    .modal-success {
+      display: none;
+      padding: 56px 40px;
+      text-align: center;
+    }
+
+    .success-icon {
+      width: 72px; height: 72px;
+      background: var(--amber-dim);
+      border: 1px solid rgba(245,166,35,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 24px;
+      animation: popIn 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .success-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+
+    .success-title span { color: var(--amber); }
+
+    .success-desc {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .success-close {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .success-close:hover { border-color: rgba(245,166,35,0.3); background: var(--amber-dim); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .steps::before { display: none; }
+      .waitlist-box { padding: 40px 24px; }
+      .modal-inner { padding: 36px 24px 28px; }
+      .modal-success { padding: 48px 24px; }
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero > * { animation: fadeUp 0.7s ease both; }
+    .hero > *:nth-child(1) { animation-delay: 0.1s; }
+    .hero > *:nth-child(2) { animation-delay: 0.2s; }
+    .hero > *:nth-child(3) { animation-delay: 0.3s; }
+    .hero > *:nth-child(4) { animation-delay: 0.4s; }
+    .hero > *:nth-child(5) { animation-delay: 0.5s; }
   </style>
 </head>
 <body>
@@ -573,16 +670,52 @@
   <!-- MODAL -->
   <div class="modal-overlay" id="waitlistModal">
     <div class="modal">
-      <div class="modal-header">
-        <span>🌊 Lista de espera — Flowoo</span>
-        <button class="modal-close" onclick="closeModal()" aria-label="Fechar">✕</button>
+      <button class="modal-close" onclick="closeModal()" aria-label="Fechar">✕</button>
+
+      <!-- FORM -->
+      <div class="modal-inner" id="modalForm">
+        <span class="modal-icon">🌊</span>
+        <h2 class="modal-title">Garanta seu lugar<br/>na <span>lista de espera</span></h2>
+        <p class="modal-desc">Acesso antecipado + preço especial para quem entrar agora. Sem spam, prometemos.</p>
+
+        <div class="field">
+          <label>Seu nome</label>
+          <input type="text" id="fieldNome" placeholder="Como te chamamos?" autocomplete="given-name" />
+        </div>
+
+        <div class="field">
+          <label>E-mail</label>
+          <input type="email" id="fieldEmail" placeholder="seu@email.com" autocomplete="email" />
+        </div>
+
+        <div class="field">
+          <label>Profissão</label>
+          <select id="fieldProfissao">
+            <option value="" disabled selected>Selecione sua área</option>
+            <option>Psicólogo(a)</option>
+            <option>Dentista</option>
+            <option>Personal Trainer</option>
+            <option>Nutricionista</option>
+            <option>Fisioterapeuta</option>
+            <option>Fonoaudiólogo(a)</option>
+            <option>Terapeuta</option>
+            <option>Coach</option>
+            <option>Outro profissional de saúde</option>
+          </select>
+        </div>
+
+        <button class="submit-btn" id="submitBtn" onclick="submitForm()">
+          <span id="btnText">Quero meu acesso antecipado →</span>
+        </button>
+        <p class="form-note">🔒 Seus dados estão seguros. Prometemos não encher sua caixa de entrada.</p>
       </div>
-      <div class="modal-body">
-        <iframe
-          src="https://tally.so/embed/QKkJ67?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-          loading="lazy"
-          title="Flowoo — Lista de espera"
-        ></iframe>
+
+      <!-- SUCCESS -->
+      <div class="modal-success" id="modalSuccess">
+        <div class="success-icon">🎉</div>
+        <h2 class="success-title">Você está<br/>na <span>lista!</span></h2>
+        <p class="success-desc">Obrigado por embarcar cedo no Flowoo.<br/>Assim que abrirmos o acesso, você será um dos primeiros a saber — com condições especiais.</p>
+        <button class="success-close" onclick="closeModal()">Fechar</button>
       </div>
     </div>
   </div>
@@ -727,31 +860,87 @@
 
   <script>
     function openModal() {
-      const modal = document.getElementById('waitlistModal');
-      modal.classList.add('active');
+      document.getElementById('waitlistModal').classList.add('active');
       document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
-      const modal = document.getElementById('waitlistModal');
-      modal.classList.remove('active');
+      document.getElementById('waitlistModal').classList.remove('active');
       document.body.style.overflow = '';
+      // Reset após fechar
+      setTimeout(() => {
+        document.getElementById('modalForm').style.display = 'block';
+        document.getElementById('modalSuccess').style.display = 'none';
+        document.getElementById('fieldNome').value = '';
+        document.getElementById('fieldEmail').value = '';
+        document.getElementById('fieldProfissao').value = '';
+        document.getElementById('btnText').textContent = 'Quero meu acesso antecipado →';
+        document.getElementById('submitBtn').disabled = false;
+      }, 400);
     }
 
-    // Fechar clicando fora do modal
+    async function submitForm() {
+      const nome = document.getElementById('fieldNome').value.trim();
+      const email = document.getElementById('fieldEmail').value.trim();
+      const profissao = document.getElementById('fieldProfissao').value;
+
+      if (!nome) { shakeFocus('fieldNome'); return; }
+      if (!email || !email.includes('@')) { shakeFocus('fieldEmail'); return; }
+      if (!profissao) { shakeFocus('fieldProfissao'); return; }
+
+      const btn = document.getElementById('submitBtn');
+      const btnText = document.getElementById('btnText');
+      btn.disabled = true;
+      btnText.textContent = 'Enviando...';
+
+      try {
+        const res = await fetch('https://formspree.io/f/xwvzjona', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ nome, email, profissao })
+        });
+
+        if (res.ok) {
+          document.getElementById('modalForm').style.display = 'none';
+          document.getElementById('modalSuccess').style.display = 'block';
+        } else {
+          btnText.textContent = 'Erro ao enviar. Tente novamente.';
+          btn.disabled = false;
+        }
+      } catch (e) {
+        btnText.textContent = 'Erro ao enviar. Tente novamente.';
+        btn.disabled = false;
+      }
+    }
+
+    function shakeFocus(id) {
+      const el = document.getElementById(id);
+      el.style.borderColor = '#e05';
+      el.style.boxShadow = '0 0 0 3px rgba(220,0,80,0.12)';
+      el.focus();
+      setTimeout(() => {
+        el.style.borderColor = '';
+        el.style.boxShadow = '';
+      }, 1800);
+    }
+
+    // Fechar clicando fora
     document.getElementById('waitlistModal').addEventListener('click', function(e) {
       if (e.target === this) closeModal();
     });
 
     // Fechar com ESC
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeModal();
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    // Enter no form
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && document.getElementById('waitlistModal').classList.contains('active')) {
+        submitForm();
+      }
     });
 
-    // Abrir modal se URL tiver #waitlist
-    if (window.location.hash === '#waitlist') {
-      openModal();
-    }
+    // Abrir se URL tiver #waitlist
+    if (window.location.hash === '#waitlist') openModal();
   </script>
 
 </body>
