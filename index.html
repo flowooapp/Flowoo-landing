@@ -3,25 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Flowoo — Gestão que flui</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <title>Flowoo — Sabe quanto vai sobrar no fim do mês?</title>
+  <meta name="description" content="O app de gestão para profissionais autônomos de saúde. Agenda, cobrança e nota fiscal num lugar só — e a clareza de quanto você fatura e quanto sobra. Teste 7 dias." />
+
+  <!-- Open Graph / compartilhamento -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Flowoo — Gestão que flui" />
+  <meta property="og:description" content="Pare de trabalhar no escuro. Agenda, cobrança, nota fiscal e financeiro num app só — feito para autônomos de saúde. Teste 7 dias." />
+  <meta property="og:url" content="https://flowoo.com.br" />
+  <meta property="og:image" content="https://flowoo.com.br/og-image.png" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Flowoo — Gestão que flui" />
+  <meta name="twitter:description" content="O app de gestão para autônomos de saúde e bem-estar. Gestão que flui." />
+  <meta name="twitter:image" content="https://flowoo.com.br/og-image.png" />
+  <meta name="theme-color" content="#0a0f0d" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0e0e0e;
-      --bg2: #161616;
-      --bg3: #1e1e1e;
-      --card: #1a1a1a;
-      --card2: #222222;
-      --blue: #00c6ff;
-      --blue2: #0077b6;
-      --teal: #00e5b0;
+      --bg: #0a0f0d;
+      --bg2: #0f1512;
+      --bg3: #161d19;
+      --card: #111814;
+      --card2: #16201b;
+      /* Marca Flowoo: degradê azul-ciano → azul médio → verde-água (igual ao wordmark) */
+      --green: #00c6ff;        /* azul-ciano (cor primária / sólida) */
+      --green2: #0099cc;       /* azul médio (meio do degradê da marca) */
+      --green-light: #00e5b0;  /* verde-água (fim do degradê) */
+      --blue-deep: #0077b6;    /* azul profundo (usado no ícone da onda) */
+      --amber: #ffb454;
       --accent-dim: rgba(0,198,255,0.12);
       --accent-glow: rgba(0,198,255,0.25);
-      --text: #f0f0f0;
-      --muted: #888;
+      --text: #e8f0ec;
+      --muted: #8aa399;
+      --muted2: #6b8278;
       --border: rgba(255,255,255,0.07);
+      --green-border: rgba(0,198,255,0.3);
     }
 
     html { scroll-behavior: smooth; }
@@ -38,7 +59,7 @@
     h1, h2, h3, .logo { font-family: 'Syne', sans-serif; }
 
     .grad {
-      background: linear-gradient(135deg, var(--blue), var(--blue2), var(--teal));
+      background: linear-gradient(135deg, var(--green) 0%, var(--green2) 40%, var(--green-light) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -53,7 +74,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 20px 5%;
-      background: rgba(14,14,14,0.85);
+      background: rgba(10,15,13,0.85);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
@@ -63,17 +84,13 @@
       font-weight: 800;
       letter-spacing: -0.5px;
       text-decoration: none;
-      background: linear-gradient(135deg, var(--blue), var(--teal));
+      background: linear-gradient(135deg, var(--green) 0%, var(--green2) 40%, var(--green-light) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
 
     .nav-links a {
       color: var(--muted);
@@ -82,12 +99,11 @@
       font-weight: 500;
       transition: color 0.2s;
     }
-
     .nav-links a:hover { color: var(--text); }
 
     .nav-cta {
-      background: linear-gradient(135deg, var(--blue), var(--blue2));
-      color: #fff;
+      background: linear-gradient(135deg, var(--green), var(--green2));
+      color: #04130d;
       padding: 10px 22px;
       border-radius: 50px;
       font-weight: 700;
@@ -119,7 +135,7 @@
       top: -200px; left: 50%;
       transform: translateX(-50%);
       width: 700px; height: 700px;
-      background: radial-gradient(circle, rgba(0,198,255,0.12) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(0,198,255,0.14) 0%, transparent 70%);
       pointer-events: none;
     }
 
@@ -128,8 +144,8 @@
       align-items: center;
       gap: 8px;
       background: var(--accent-dim);
-      border: 1px solid rgba(0,198,255,0.3);
-      color: var(--blue);
+      border: 1px solid var(--green-border);
+      color: var(--green);
       padding: 6px 16px;
       border-radius: 50px;
       font-size: 0.8rem;
@@ -142,15 +158,12 @@
     .badge::before {
       content: '';
       width: 6px; height: 6px;
-      background: var(--teal);
+      background: var(--green-light);
       border-radius: 50%;
       animation: pulse 2s infinite;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
     .hero h1 {
       font-size: clamp(2.8rem, 7vw, 5.5rem);
@@ -164,21 +177,16 @@
     .hero p {
       font-size: clamp(1rem, 2vw, 1.2rem);
       color: var(--muted);
-      max-width: 540px;
+      max-width: 560px;
       margin-bottom: 40px;
       font-weight: 400;
     }
 
-    .hero-btns {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--blue), var(--blue2));
-      color: #fff;
+      background: linear-gradient(135deg, var(--green), var(--green2));
+      color: #04130d;
       padding: 14px 30px;
       border-radius: 50px;
       font-weight: 700;
@@ -190,7 +198,7 @@
       cursor: pointer;
       border: none;
     }
-    .btn-primary:hover { opacity: 0.85; transform: translateY(-2px); box-shadow: 0 0 40px rgba(0,198,255,0.35); }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 0 40px rgba(0,198,255,0.4); }
 
     .btn-secondary {
       background: transparent;
@@ -203,86 +211,42 @@
       border: 1px solid var(--border);
       transition: all 0.2s;
     }
-    .btn-secondary:hover { border-color: rgba(0,198,255,0.3); background: rgba(0,198,255,0.04); }
+    .btn-secondary:hover { border-color: var(--green-border); background: rgba(0,198,255,0.04); }
 
     /* STATS */
     .stats {
-      display: flex;
-      gap: 0;
-      justify-content: center;
+      display: flex; gap: 0; justify-content: center;
       margin-top: 64px;
       border: 1px solid var(--border);
       border-radius: 16px;
       overflow: hidden;
       background: var(--card);
-      max-width: 600px;
-      width: 100%;
+      max-width: 600px; width: 100%;
     }
-
-    .stat {
-      flex: 1;
-      padding: 24px 20px;
-      text-align: center;
-      border-right: 1px solid var(--border);
-    }
+    .stat { flex: 1; padding: 24px 20px; text-align: center; border-right: 1px solid var(--border); }
     .stat:last-child { border-right: none; }
-
     .stat-num {
       font-family: 'Syne', sans-serif;
-      font-size: 1.8rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--blue), var(--teal));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-size: 1.8rem; font-weight: 800;
+      background: linear-gradient(135deg, var(--green) 0%, var(--green2) 40%, var(--green-light) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
       display: block;
     }
-
-    .stat-label {
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-top: 4px;
-      line-height: 1.3;
-    }
+    .stat-label { font-size: 0.75rem; color: var(--muted); margin-top: 4px; line-height: 1.3; }
 
     /* SECTION */
-    section {
-      padding: 100px 5%;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+    section { padding: 100px 5%; max-width: 1100px; margin: 0 auto; }
 
     .section-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      color: var(--blue);
-      text-transform: uppercase;
-      font-family: 'Syne', sans-serif;
-      margin-bottom: 16px;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 2px;
+      color: var(--green); text-transform: uppercase;
+      font-family: 'Syne', sans-serif; margin-bottom: 16px;
     }
-
-    .section-title {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -1px;
-      margin-bottom: 16px;
-    }
-
-    .section-sub {
-      color: var(--muted);
-      font-size: 1.05rem;
-      max-width: 480px;
-      margin-bottom: 60px;
-    }
+    .section-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; line-height: 1.1; letter-spacing: -1px; margin-bottom: 16px; }
+    .section-sub { color: var(--muted); font-size: 1.05rem; max-width: 480px; margin-bottom: 60px; }
 
     /* FEATURES GRID */
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 16px;
-    }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
 
     .feature-card {
       background: var(--card);
@@ -290,348 +254,307 @@
       border-radius: 20px;
       padding: 28px;
       transition: border-color 0.3s, transform 0.2s;
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
     }
-
     .feature-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--blue), var(--teal), transparent);
-      opacity: 0;
-      transition: opacity 0.3s;
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--green), var(--green-light), transparent);
+      opacity: 0; transition: opacity 0.3s;
     }
-
-    .feature-card:hover { border-color: rgba(0,198,255,0.3); transform: translateY(-3px); }
+    .feature-card:hover { border-color: var(--green-border); transform: translateY(-3px); }
     .feature-card:hover::before { opacity: 1; }
 
     .feature-icon {
-      width: 48px; height: 48px;
-      background: var(--accent-dim);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      margin-bottom: 18px;
+      width: 48px; height: 48px; background: var(--accent-dim);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 18px;
     }
-
-    .feature-card h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-      font-family: 'Syne', sans-serif;
-    }
-
+    .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; font-family: 'Syne', sans-serif; }
     .feature-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.6; }
 
     /* STEPS */
     .steps { display: flex; flex-direction: column; gap: 0; position: relative; }
-
     .steps::before {
-      content: '';
-      position: absolute;
-      left: 28px; top: 48px; bottom: 48px;
-      width: 1px;
-      background: linear-gradient(to bottom, var(--blue), var(--teal), transparent);
+      content: ''; position: absolute; left: 28px; top: 48px; bottom: 48px; width: 1px;
+      background: linear-gradient(to bottom, var(--green), var(--green-light), transparent);
     }
-
-    .step {
-      display: flex;
-      gap: 28px;
-      align-items: flex-start;
-      padding: 32px 0;
-      border-bottom: 1px solid var(--border);
-    }
+    .step { display: flex; gap: 28px; align-items: flex-start; padding: 32px 0; border-bottom: 1px solid var(--border); }
     .step:last-child { border-bottom: none; }
-
     .step-num {
       width: 56px; height: 56px;
-      background: linear-gradient(135deg, var(--blue), var(--blue2));
-      color: #fff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 1rem;
-      flex-shrink: 0;
-      position: relative;
-      z-index: 1;
+      background: linear-gradient(135deg, var(--green), var(--green2));
+      color: #04130d; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem;
+      flex-shrink: 0; position: relative; z-index: 1;
     }
-
     .step-content h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; font-family: 'Syne', sans-serif; }
     .step-content p { color: var(--muted); font-size: 0.9rem; }
 
     /* AUDIENCE */
-    .audience-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 12px;
-    }
-
+    .audience-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
     .audience-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px 16px;
-      text-align: center;
-      transition: border-color 0.2s, background 0.2s;
-      cursor: default;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 20px 16px; text-align: center;
+      transition: border-color 0.2s, background 0.2s; cursor: default;
     }
-
-    .audience-card:hover { border-color: rgba(0,198,255,0.35); background: var(--accent-dim); }
+    .audience-card:hover { border-color: var(--green-border); background: var(--accent-dim); }
     .audience-emoji { font-size: 1.8rem; display: block; margin-bottom: 10px; }
     .audience-name { font-size: 0.85rem; font-weight: 600; font-family: 'Syne', sans-serif; }
 
+    /* ===== CALCULADORA ROI ===== */
+    #calculadora { position: relative; }
+    .calc-glow {
+      position: absolute; top: 40px; right: -100px; width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(0,198,255,0.12), transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+    .calc-wrap { position: relative; z-index: 1; max-width: 580px; }
+    .calc-h {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.1; font-weight: 600;
+      letter-spacing: -0.5px; margin-bottom: 12px;
+    }
+    .calc-h .accent { color: var(--green); }
+    .calc-sub { color: var(--muted); font-size: 1rem; margin-bottom: 32px; line-height: 1.5; }
+
+    .calc-field { margin-bottom: 24px; }
+    .calc-label { font-size: 0.875rem; color: #b8ccc3; font-weight: 500; display: block; margin-bottom: 10px; }
+    .calc-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .calc-chip {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: #b8ccc3;
+      padding: 8px 14px; border-radius: 100px; font-size: 0.8rem; cursor: pointer;
+      transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+    }
+    .calc-chip:hover { border-color: var(--green-border); }
+    .calc-chip.active { background: var(--accent-dim); border-color: var(--green); color: var(--green); font-weight: 600; }
+
+    .slider-head { display: flex; justify-content: space-between; align-items: baseline; }
+    .slider-val { color: var(--green); font-weight: 700; font-size: 1rem; font-variant-numeric: tabular-nums; }
+    input[type=range] {
+      width: 100%; height: 6px; border-radius: 100px; appearance: none;
+      -webkit-appearance: none; outline: none; cursor: pointer; margin-top: 10px;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%;
+      background: var(--green); cursor: pointer; border: 3px solid var(--bg);
+      box-shadow: 0 0 0 1px var(--green), 0 2px 8px rgba(0,198,255,0.5);
+    }
+    input[type=range]::-moz-range-thumb {
+      width: 22px; height: 22px; border-radius: 50%; background: var(--green);
+      cursor: pointer; border: 3px solid var(--bg); box-shadow: 0 0 0 1px var(--green);
+    }
+
+    .calc-cta {
+      width: 100%; background: var(--green); color: #04130d; border: none;
+      padding: 16px; border-radius: 14px; font-size: 1rem; font-weight: 700;
+      cursor: pointer; margin-top: 8px; font-family: 'DM Sans', sans-serif;
+      box-shadow: 0 8px 30px rgba(0,198,255,0.25); transition: transform 0.15s;
+    }
+    .calc-cta:active { transform: scale(0.98); }
+
+    .calc-result { margin-top: 32px; display: none; }
+    .calc-result.show { display: block; animation: reveal 0.5s ease both; }
+    @keyframes reveal { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+    .result-top {
+      text-align: center; padding: 28px 20px;
+      background: linear-gradient(160deg, rgba(0,198,255,0.1), rgba(0,198,255,0.02));
+      border: 1px solid rgba(0,198,255,0.2); border-radius: 20px; margin-bottom: 16px;
+    }
+    .result-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+    .big-number {
+      font-family: 'Fraunces', serif; font-size: clamp(2.8rem, 11vw, 4rem);
+      font-weight: 600; color: var(--green); line-height: 1; margin: 10px 0 4px;
+    }
+    .big-number .per { font-size: 1.4rem; color: var(--muted); font-weight: 400; }
+    .result-ano { font-size: 0.95rem; color: #b8ccc3; }
+
+    .breakdown { display: flex; flex-direction: column; gap: 10px; }
+    .b-line {
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      padding: 16px 18px; background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06); border-radius: 14px;
+    }
+    .b-line.destaque { background: rgba(0,198,255,0.07); border-color: var(--green-border); }
+    .b-titulo { font-size: 0.95rem; font-weight: 600; margin-bottom: 3px; }
+    .b-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.4; max-width: 320px; }
+    .b-valor { color: var(--green); font-weight: 700; font-size: 1rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .star { color: var(--green); }
+    .calc-disclaimer { font-size: 0.75rem; color: var(--muted2); text-align: center; margin: 16px 0; line-height: 1.5; }
+    .calc-cta-final { margin-top: 4px; font-size: 0.9rem; line-height: 1.3; padding: 18px; }
+
     /* WAITLIST SECTION */
-    .waitlist-section {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 5% 100px;
-    }
-
+    .waitlist-section { max-width: 1100px; margin: 0 auto; padding: 0 5% 100px; }
     .waitlist-box {
-      background: var(--card);
-      border: 1px solid rgba(0,198,255,0.2);
-      border-radius: 28px;
-      padding: 64px 48px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+      background: var(--card); border: 1px solid rgba(0,198,255,0.2);
+      border-radius: 28px; padding: 64px 48px; text-align: center;
+      position: relative; overflow: hidden;
     }
-
     .waitlist-box::before {
-      content: '';
-      position: absolute;
-      top: -100px; left: 50%; transform: translateX(-50%);
+      content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
       width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(0,198,255,0.1) 0%, transparent 70%);
-      pointer-events: none;
+      background: radial-gradient(circle, rgba(0,198,255,0.1) 0%, transparent 70%); pointer-events: none;
     }
+    .waitlist-box h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; letter-spacing: -1px; margin-bottom: 16px; position: relative; }
+    .waitlist-box > p { color: var(--muted); margin-bottom: 36px; font-size: 1rem; position: relative; }
 
-    .waitlist-box h2 {
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800;
-      letter-spacing: -1px;
-      margin-bottom: 16px;
-      position: relative;
+    /* PLANOS */
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px; max-width: 760px; margin: 0 auto;
     }
-
-    .waitlist-box > p {
-      color: var(--muted);
-      margin-bottom: 36px;
-      font-size: 1rem;
-      position: relative;
+    .pricing-grid-3 { max-width: 1000px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .plan {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 24px; padding: 36px 32px; position: relative; text-align: left;
+      transition: border-color 0.3s, transform 0.2s;
     }
+    .plan:hover { transform: translateY(-4px); }
+    .plan.destaque { border-color: var(--green); box-shadow: 0 0 40px rgba(0,198,255,0.12); }
+    .plan-tag {
+      position: absolute; top: -12px; right: 24px;
+      background: linear-gradient(135deg, var(--green), var(--green-light));
+      color: #04130d; font-size: 0.72rem; font-weight: 700; font-family: 'Syne', sans-serif;
+      padding: 5px 14px; border-radius: 50px; letter-spacing: 0.5px;
+    }
+    .plan-name { font-family: 'Syne', sans-serif; font-size: 1.25rem; font-weight: 800; margin-bottom: 6px; }
+    .plan-for { font-size: 0.85rem; color: var(--muted); margin-bottom: 22px; min-height: 38px; }
+    .plan-price { display: flex; align-items: baseline; gap: 4px; margin-bottom: 4px; }
+    .plan-price .cifrao { font-size: 1.1rem; color: var(--muted); }
+    .plan-price .valor { font-family: 'Syne', sans-serif; font-size: 2.6rem; font-weight: 800; line-height: 1; }
+    .plan-price .mes { font-size: 0.9rem; color: var(--muted); }
+    .plan-note { font-size: 0.78rem; color: var(--green); margin-bottom: 24px; font-weight: 600; }
+    .plan-feats { list-style: none; margin-bottom: 28px; display: flex; flex-direction: column; gap: 11px; }
+    .plan-feats li { font-size: 0.875rem; color: var(--text); display: flex; gap: 10px; align-items: flex-start; line-height: 1.4; }
+    .plan-feats li::before { content: '✓'; color: var(--green); font-weight: 800; flex-shrink: 0; }
+    .plan-cta {
+      display: block; width: 100%; text-align: center; padding: 14px;
+      border-radius: 50px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem;
+      cursor: pointer; border: none; text-decoration: none; transition: all 0.2s;
+    }
+    .plan-cta.primary { background: linear-gradient(135deg, var(--green), var(--green2)); color: #04130d; box-shadow: 0 0 24px rgba(0,198,255,0.25); }
+    .plan-cta.primary:hover { opacity: 0.9; transform: translateY(-1px); }
+    .plan-cta.ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .plan-cta.ghost:hover { border-color: var(--green-border); background: rgba(0,198,255,0.04); }
+    .pricing-foot { text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 28px; }
 
     /* FOOTER */
     footer {
-      border-top: 1px solid var(--border);
-      padding: 32px 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
-      color: var(--muted);
-      font-size: 0.85rem;
+      border-top: 1px solid var(--border); padding: 32px 5%;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px; color: var(--muted); font-size: 0.85rem;
     }
-
     footer .logo { font-size: 1.1rem; }
+
+    /* ===== WHATSAPP FLOAT ===== */
+    .wa-float {
+      position: fixed; bottom: 24px; right: 24px; z-index: 200;
+      width: 58px; height: 58px; border-radius: 50%;
+      background: #25D366; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 24px rgba(37,211,102,0.45);
+      transition: transform 0.2s, box-shadow 0.2s; cursor: pointer;
+      animation: waPop 0.5s cubic-bezier(0.16,1,0.3,1) 1s both;
+    }
+    .wa-float:hover { transform: scale(1.08); box-shadow: 0 8px 32px rgba(37,211,102,0.6); }
+    .wa-float svg { width: 32px; height: 32px; }
+    @keyframes waPop { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
 
     /* MODAL */
     .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 999;
-      background: rgba(0,0,0,0.8);
-      backdrop-filter: blur(10px);
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+      display: none; position: fixed; inset: 0; z-index: 999;
+      background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+      align-items: center; justify-content: center; padding: 20px;
     }
-
     .modal-overlay.active { display: flex; }
-
     .modal {
-      background: var(--card);
-      border: 1px solid rgba(0,198,255,0.25);
-      border-radius: 28px;
-      width: 100%;
-      max-width: 480px;
-      position: relative;
-      animation: slideUp 0.35s cubic-bezier(0.16,1,0.3,1);
-      overflow: hidden;
+      background: var(--card); border: 1px solid var(--green-border);
+      border-radius: 28px; width: 100%; max-width: 480px; position: relative;
+      animation: slideUp 0.35s cubic-bezier(0.16,1,0.3,1); overflow: hidden;
     }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(40px) scale(0.96); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
+    @keyframes slideUp { from { opacity: 0; transform: translateY(40px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
     .modal-close {
-      position: absolute;
-      top: 16px; right: 16px;
-      width: 32px; height: 32px;
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: var(--muted);
-      font-size: 0.9rem;
-      transition: all 0.2s;
-      z-index: 2;
+      position: absolute; top: 16px; right: 16px; width: 32px; height: 32px;
+      background: var(--bg3); border: 1px solid var(--border); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+      color: var(--muted); font-size: 0.9rem; transition: all 0.2s; z-index: 2;
     }
-    .modal-close:hover { background: rgba(0,198,255,0.1); color: var(--blue); border-color: rgba(0,198,255,0.4); }
-
+    .modal-close:hover { background: rgba(0,198,255,0.1); color: var(--green); border-color: var(--green-border); }
     .modal-inner { padding: 44px 40px 40px; }
-
     .modal-icon { font-size: 2.2rem; margin-bottom: 16px; display: block; }
-
-    .modal-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      margin-bottom: 8px;
-      line-height: 1.2;
-    }
-
+    .modal-title { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; line-height: 1.2; }
     .modal-desc { color: var(--muted); font-size: 0.9rem; margin-bottom: 28px; line-height: 1.5; }
-
     .field { margin-bottom: 16px; }
-
     .field label {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 600;
-      font-family: 'Syne', sans-serif;
-      color: var(--muted);
-      margin-bottom: 7px;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
+      display: block; font-size: 0.8rem; font-weight: 600; font-family: 'Syne', sans-serif;
+      color: var(--muted); margin-bottom: 7px; letter-spacing: 0.5px; text-transform: uppercase;
     }
-
     .field input, .field select {
-      width: 100%;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 13px 16px;
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.95rem;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      outline: none;
-      appearance: none;
+      width: 100%; background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 13px 16px; color: var(--text);
+      font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+      transition: border-color 0.2s, box-shadow 0.2s; outline: none; appearance: none;
     }
-
     .field input::placeholder { color: #555; }
-
-    .field input:focus, .field select:focus {
-      border-color: rgba(0,198,255,0.5);
-      box-shadow: 0 0 0 3px rgba(0,198,255,0.08);
-    }
-
+    .field input:focus, .field select:focus { border-color: rgba(0,198,255,0.5); box-shadow: 0 0 0 3px rgba(0,198,255,0.08); }
     .field select {
       cursor: pointer;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      padding-right: 36px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238aa399' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px;
     }
-
-    .field select option { background: #1a1a1a; color: var(--text); }
-
+    .field select option { background: #16201b; color: var(--text); }
     .submit-btn {
-      width: 100%;
-      background: linear-gradient(135deg, var(--blue), var(--blue2));
-      color: #fff;
-      border: none;
-      border-radius: 50px;
-      padding: 15px;
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-top: 8px;
-      transition: all 0.2s;
-      box-shadow: 0 0 24px rgba(0,198,255,0.25);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      width: 100%; background: linear-gradient(135deg, var(--green), var(--green2));
+      color: #04130d; border: none; border-radius: 50px; padding: 15px;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; cursor: pointer;
+      margin-top: 8px; transition: all 0.2s; box-shadow: 0 0 24px rgba(0,198,255,0.25);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
     }
-    .submit-btn:hover { opacity: 0.85; transform: translateY(-1px); box-shadow: 0 0 36px rgba(0,198,255,0.4); }
+    .submit-btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 0 36px rgba(0,198,255,0.4); }
     .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-
     .form-note { text-align: center; font-size: 0.75rem; color: #555; margin-top: 14px; }
-
     .modal-success { display: none; padding: 56px 40px; text-align: center; }
-
     .success-icon {
-      width: 72px; height: 72px;
-      background: var(--accent-dim);
-      border: 1px solid rgba(0,198,255,0.3);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      margin: 0 auto 24px;
-      animation: popIn 0.5s cubic-bezier(0.16,1,0.3,1);
+      width: 72px; height: 72px; background: var(--accent-dim); border: 1px solid var(--green-border);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; margin: 0 auto 24px; animation: popIn 0.5s cubic-bezier(0.16,1,0.3,1);
     }
-
-    @keyframes popIn {
-      from { transform: scale(0.5); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    .success-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      margin-bottom: 12px;
-    }
-
+    @keyframes popIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .success-title { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 12px; }
     .success-desc { color: var(--muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 28px; }
-
     .success-close {
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 12px 28px;
-      border-radius: 50px;
-      font-family: 'Syne', sans-serif;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.2s;
+      background: var(--bg3); border: 1px solid var(--border); color: var(--text);
+      padding: 12px 28px; border-radius: 50px; font-family: 'Syne', sans-serif;
+      font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.2s;
     }
-    .success-close:hover { border-color: rgba(0,198,255,0.3); background: var(--accent-dim); }
+    .success-close:hover { border-color: var(--green-border); background: var(--accent-dim); }
 
     @media (max-width: 768px) {
-      .nav-links { display: none; }
+      nav { padding: 12px 4%; gap: 10px; }
+      .logo { font-size: 1.15rem; flex-shrink: 0; }
+      .nav-links {
+        display: flex; gap: 16px; flex: 1; justify-content: center;
+        overflow-x: auto; -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .nav-links::-webkit-scrollbar { display: none; }
+      .nav-links a { font-size: 0.8rem; white-space: nowrap; }
+      .nav-cta { padding: 8px 14px; font-size: 0.78rem; flex-shrink: 0; }
       .steps::before { display: none; }
       .waitlist-box { padding: 40px 24px; }
       .modal-inner { padding: 36px 24px 28px; }
       .modal-success { padding: 48px 24px; }
+      .wa-float { bottom: 18px; right: 18px; width: 54px; height: 54px; }
     }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
+    @media (max-width: 460px) {
+      .nav-links { gap: 12px; }
+      .nav-links a { font-size: 0.72rem; }
+      .logo { font-size: 1rem; }
+      .nav-cta { padding: 7px 11px; font-size: 0.72rem; }
     }
 
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
     .hero > * { animation: fadeUp 0.7s ease both; }
     .hero > *:nth-child(1) { animation-delay: 0.1s; }
     .hero > *:nth-child(2) { animation-delay: 0.2s; }
@@ -648,8 +571,8 @@
       <button class="modal-close" onclick="closeModal()" aria-label="Fechar">✕</button>
       <div class="modal-inner" id="modalForm">
         <span class="modal-icon">🌊</span>
-        <h2 class="modal-title">Garanta seu lugar<br/>na <span class="grad">lista de espera</span></h2>
-        <p class="modal-desc">Acesso antecipado + preço especial para quem entrar agora. Sem spam, prometemos.</p>
+        <h2 class="modal-title">Teste o Flowoo<br/><span class="grad">por 7 dias</span></h2>
+        <p class="modal-desc">Crie sua conta e use o Flowoo completo por 7 dias. Sem fidelidade — cancele quando quiser.</p>
         <div class="field">
           <label>Seu nome</label>
           <input type="text" id="fieldNome" placeholder="Como te chamamos?" autocomplete="given-name" />
@@ -672,19 +595,18 @@
             <option>Acupunturista</option>
             <option>Terapeuta Holístico(a)</option>
             <option>Coach de Saúde</option>
-            <option>Dentista</option>
             <option>Outro profissional de saúde</option>
           </select>
         </div>
         <button class="submit-btn" id="submitBtn" onclick="submitForm()">
-          <span id="btnText">Quero meu acesso antecipado →</span>
+          <span id="btnText">Criar conta e começar →</span>
         </button>
         <p class="form-note">🔒 Seus dados estão seguros. Prometemos não encher sua caixa de entrada.</p>
       </div>
       <div class="modal-success" id="modalSuccess">
         <div class="success-icon">🎉</div>
-        <h2 class="success-title">Você está<br/>na <span class="grad">lista!</span></h2>
-        <p class="success-desc">Obrigado por embarcar cedo no Flowoo.<br/>Assim que abrirmos o acesso, você será um dos primeiros a saber — com condições especiais.</p>
+        <h2 class="success-title">Tudo certo!<br/><span class="grad">Bora começar.</span></h2>
+        <p class="success-desc">Recebemos seu cadastro. Enviamos no seu e-mail o link pra ativar sua conta e começar seus 7 dias de teste agora mesmo.</p>
         <button class="success-close" onclick="closeModal()">Fechar</button>
       </div>
     </div>
@@ -695,34 +617,21 @@
     <a href="#" class="logo">Flowoo</a>
     <ul class="nav-links">
       <li><a href="#funcionalidades">Funcionalidades</a></li>
+      <li><a href="#calculadora">Calculadora</a></li>
       <li><a href="#como-funciona">Como funciona</a></li>
-      <li><a href="#publico">Para quem</a></li>
+      <li><a href="#planos">Planos</a></li>
     </ul>
-    <button onclick="openModal()" class="nav-cta">Lista de espera</button>
+    <button onclick="openModal()" class="nav-cta">Testar 7 dias</button>
   </nav>
 
   <!-- HERO -->
   <section class="hero">
-    <div class="badge">Em desenvolvimento · Agosto 2026</div>
-    <h1>Gestão que <span class="grad">flui.</span></h1>
-    <p>Agenda, cobranças, nota fiscal e controle financeiro num app só. Com assistente de IA que atende seus pacientes enquanto você foca no que importa: cuidar de pessoas.</p>
+    <div class="badge">O app de gestão do profissional autônomo</div>
+    <h1>Fature mais <span class="grad">otimizando</span> seu tempo.</h1>
+    <p>Cada hora que você gasta com agenda, cobrança e nota fiscal é uma hora que não atende — e dinheiro que deixa de entrar. O Flowoo automatiza a parte chata e te mostra, em tempo real, quanto você fatura e quanto sobra.</p>
     <div class="hero-btns">
-      <button onclick="openModal()" class="btn-primary">Entrar na lista de espera</button>
-      <a href="#como-funciona" class="btn-secondary">Ver como funciona →</a>
-    </div>
-    <div class="stats">
-      <div class="stat">
-        <span class="stat-num">+500k</span>
-        <span class="stat-label">Autônomos de saúde no Brasil</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num">4+</span>
-        <span class="stat-label">Apps que o profissional usa hoje</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num">1</span>
-        <span class="stat-label">App pra substituir todos</span>
-      </div>
+      <button onclick="openModal()" class="btn-primary">Testar por 7 dias</button>
+      <a href="#planos" class="btn-secondary">Ver planos →</a>
     </div>
   </section>
 
@@ -738,9 +647,9 @@
         <p>Lembretes automáticos para pacientes, confirmação de consulta e visualização da semana toda. Sem WhatsApp manual.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">💬</div>
-        <h3>Assistente no WhatsApp</h3>
-        <p>Sua assistente virtual responde pacientes, agenda consultas e confirma horários pelo WhatsApp — 24h por dia, sem você precisar digitar nada.</p>
+        <div class="feature-icon">🛡️</div>
+        <h3>Motor de retenção</h3>
+        <p>A IA detecta pacientes em risco de abandono antes que eles sumam — e te avisa a tempo de agir. Sua receita protegida.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">💰</div>
@@ -754,12 +663,12 @@
       </div>
       <div class="feature-card">
         <div class="feature-icon">📊</div>
-        <h3>Financeiro em tempo real</h3>
-        <p>Quanto você vai receber esse mês, quem deve, quanto de imposto. Tudo visível num dashboard simples.</p>
+        <h3>Previsão de faturamento</h3>
+        <p>Quanto você vai receber esse mês, quem deve, quanto de imposto. A IA projeta seu futuro financeiro num dashboard simples.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🤖</div>
-        <h3>IA proativa</h3>
+        <h3>Assessor financeiro com IA</h3>
         <p>O app te avisa antes de você precisar perguntar. "João não pagou." "Você tem janela livre quinta." "Vale abrir CNPJ agora."</p>
       </div>
       <div class="feature-card">
@@ -775,6 +684,89 @@
     </div>
   </section>
 
+  <!-- CALCULADORA ROI -->
+  <section id="calculadora">
+    <div class="calc-glow"></div>
+    <div class="calc-wrap">
+      <div class="section-label">Calculadora</div>
+      <h2 class="calc-h">Quanto o Flowoo <span class="accent">devolve pro seu bolso</span> todo mês?</h2>
+      <p class="calc-sub">Coloque sua realidade. A conta é com números seus — e propositalmente conservadora.</p>
+
+      <div class="calc-field">
+        <label class="calc-label">Sua área</label>
+        <div class="calc-chips" id="calcChips"></div>
+      </div>
+
+      <div class="calc-field">
+        <div class="slider-head">
+          <label class="calc-label" style="margin-bottom:0">Quanto você cobra por sessão</label>
+          <span class="slider-val" id="valTicket"></span>
+        </div>
+        <input type="range" id="ticket" min="50" max="500" step="10" />
+      </div>
+
+      <div class="calc-field">
+        <div class="slider-head">
+          <label class="calc-label" style="margin-bottom:0">Atendimentos por semana</label>
+          <span class="slider-val" id="valSessoes"></span>
+        </div>
+        <input type="range" id="sessoes" min="5" max="60" step="1" />
+      </div>
+
+      <div class="calc-field">
+        <div class="slider-head">
+          <label class="calc-label" style="margin-bottom:0">Horas/semana com agenda, cobrança e notas</label>
+          <span class="slider-val" id="valHoras"></span>
+        </div>
+        <input type="range" id="horas" min="1" max="15" step="1" />
+      </div>
+
+      <div class="calc-field">
+        <div class="slider-head">
+          <label class="calc-label" style="margin-bottom:0">Quanto paga de contador por mês</label>
+          <span class="slider-val" id="valContador"></span>
+        </div>
+        <input type="range" id="contador" min="0" max="600" step="20" />
+      </div>
+
+      <p style="color:var(--muted);font-size:0.9rem;margin:4px 0 14px;line-height:1.5;">Com seus números acima, veja quanto o Flowoo coloca de volta no seu caixa todo mês — em tempo recuperado, economia de contador e faturamento que você deixa de perder.</p>
+      <button class="calc-cta" onclick="calcular()">Ver quanto eu ganho por mês →</button>
+
+      <div class="calc-result" id="calcResult">
+        <div class="result-top">
+          <span class="result-label">Seu retorno estimado com o Flowoo</span>
+          <div class="big-number" id="bigNumber"></div>
+          <span class="result-ano" id="resultAno"></span>
+        </div>
+        <div class="breakdown">
+          <div class="b-line">
+            <div>
+              <div class="b-titulo">Tempo recuperado</div>
+              <div class="b-desc" id="descTempo"></div>
+            </div>
+            <div class="b-valor" id="valorTempo"></div>
+          </div>
+          <div class="b-line">
+            <div>
+              <div class="b-titulo">Economia de contador</div>
+              <div class="b-desc">Receita Saúde / NFS-e e carnê-leão sem intermediário caro</div>
+            </div>
+            <div class="b-valor" id="valorContador"></div>
+          </div>
+          <div class="b-line destaque">
+            <div>
+              <div class="b-titulo"><span class="star">★</span> Receita protegida pela IA</div>
+              <div class="b-desc">1 paciente em risco de abandono recuperado por mês</div>
+            </div>
+            <div class="b-valor" id="valorReceita"></div>
+          </div>
+        </div>
+        <p class="calc-disclaimer">Estimativa conservadora baseada nos seus números. O resultado real varia conforme seu uso.</p>
+        <button class="calc-cta calc-cta-final" onclick="openModal()">Testar o Flowoo por 7 dias →</button>
+      </div>
+    </div>
+  </section>
+
   <!-- HOW IT WORKS -->
   <section id="como-funciona">
     <div class="section-label">Como funciona</div>
@@ -785,14 +777,14 @@
         <div class="step-num">01</div>
         <div class="step-content">
           <h3>Cadastre seus pacientes e serviços</h3>
-          <p>Em minutos você importa sua agenda atual e cadastra seus serviços. O Flowoo aprende sua rotina, configura sua assistente virtual e começa a automatizar.</p>
+          <p>Em minutos você importa sua agenda atual e cadastra seus serviços. O Flowoo aprende sua rotina e começa a automatizar.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">02</div>
         <div class="step-content">
           <h3>Atenda normalmente</h3>
-          <p>Enquanto você está em sessão, sua assistente no WhatsApp agenda novos pacientes, confirma consultas e responde dúvidas automaticamente. O app ainda emite recibo e registra o pagamento.</p>
+          <p>Enquanto você está em sessão, o Flowoo confirma consultas, registra pagamentos e emite recibo automaticamente. A IA monitora quem está em risco de abandonar.</p>
         </div>
       </div>
       <div class="step">
@@ -808,8 +800,8 @@
   <!-- AUDIENCE -->
   <section id="publico">
     <div class="section-label">Para quem</div>
-    <h2 class="section-title">Feito para quem<br/>trabalha por conta própria.</h2>
-    <p class="section-sub">Qualquer profissional de saúde e bem-estar autônomo. Se você atende, cobra e emite documento fiscal — o Flowoo é pra você.</p>
+    <h2 class="section-title">Se você atende, cobra<br/>e emite nota — é pra você.</h2>
+    <p class="section-sub">O Flowoo se adapta à sua profissão já no primeiro acesso: você vê só o que faz sentido pra sua rotina. Um profissional, uma experiência sob medida.</p>
     <div class="audience-grid">
       <div class="audience-card"><span class="audience-emoji">🧠</span><span class="audience-name">Psicólogos</span></div>
       <div class="audience-card"><span class="audience-emoji">🥗</span><span class="audience-name">Nutricionistas</span></div>
@@ -824,12 +816,63 @@
     </div>
   </section>
 
-  <!-- WAITLIST -->
-  <div class="waitlist-section" id="waitlist">
+  <!-- PLANOS -->
+  <section id="planos" style="text-align:center;">
+    <div class="section-label">Planos</div>
+    <h2 class="section-title">Escolha seu plano.<br/>Teste 7 dias antes.</h2>
+    <p class="section-sub" style="margin-left:auto;margin-right:auto;">7 dias para testar tudo. Se fizer sentido, continue. Se não, é só cancelar — sem fidelidade, sem letra miúda.</p>
+    <div class="pricing-grid pricing-grid-3">
+      <div class="plan">
+        <div class="plan-name">Essencial</div>
+        <div class="plan-for">Pra organizar a agenda e parar de cobrar na unha.</div>
+        <div class="plan-price"><span class="cifrao">R$</span><span class="valor">79</span><span class="mes">/mês</span></div>
+        <div class="plan-note">7 dias pra testar</div>
+        <ul class="plan-feats">
+          <li>Agenda com lembretes e confirmação</li>
+          <li>Cobrança automática (Pix, cartão, boleto)</li>
+          <li>Receita Saúde integrado</li>
+          <li>Dashboard financeiro básico</li>
+        </ul>
+        <button class="plan-cta ghost" onclick="openModal()">Testar 7 dias</button>
+      </div>
+      <div class="plan destaque">
+        <div class="plan-tag">Mais escolhido</div>
+        <div class="plan-name">Profissional</div>
+        <div class="plan-for">Pra quem quer a IA cuidando do financeiro por você.</div>
+        <div class="plan-price"><span class="cifrao">R$</span><span class="valor">119</span><span class="mes">/mês</span></div>
+        <div class="plan-note">7 dias pra testar</div>
+        <ul class="plan-feats">
+          <li>Tudo do Essencial</li>
+          <li>Previsão de faturamento com IA</li>
+          <li>Assessor financeiro proativo</li>
+          <li>NFS-e automática pra PJ</li>
+          <li>Recursos que se adaptam à sua profissão</li>
+        </ul>
+        <button class="plan-cta primary" onclick="openModal()">Testar 7 dias</button>
+      </div>
+      <div class="plan">
+        <div class="plan-name">Avançado</div>
+        <div class="plan-for">Pra quem quer extrair o máximo e crescer com previsibilidade.</div>
+        <div class="plan-price"><span class="cifrao">R$</span><span class="valor">199</span><span class="mes">/mês</span></div>
+        <div class="plan-note">7 dias pra testar</div>
+        <ul class="plan-feats">
+          <li>Tudo do Profissional</li>
+          <li>Assistente fiscal (DAS, limite MEI, regime)</li>
+          <li>Relatórios e metas avançadas</li>
+          <li>Suporte prioritário</li>
+        </ul>
+        <button class="plan-cta ghost" onclick="openModal()">Testar 7 dias</button>
+      </div>
+    </div>
+    <p class="pricing-foot">Sem fidelidade. Cancele quando quiser.</p>
+  </section>
+
+  <!-- CTA FINAL -->
+  <div class="waitlist-section" id="comecar">
     <div class="waitlist-box">
-      <h2>Entre na<br/><span class="grad">lista de espera.</span></h2>
-      <p>Seja um dos primeiros a usar o Flowoo.<br/>Acesso antecipado e preço especial pra quem entrar agora.</p>
-      <button onclick="openModal()" class="btn-primary">Quero entrar →</button>
+      <h2>Pare de perder tempo<br/><span class="grad">e dinheiro.</span></h2>
+      <p>Em 7 dias você vê quanto fatura, quanto sobra e quanto de trabalho chato sai das suas costas.</p>
+      <button onclick="openModal()" class="btn-primary">Testar por 7 dias →</button>
     </div>
   </div>
 
@@ -840,12 +883,19 @@
     <span>flowoo.com.br</span>
   </footer>
 
+  <!-- WHATSAPP FLOAT -->
+  <a class="wa-float" id="waFloat" href="https://wa.me/5548988542868?text=Oi!%20Quero%20saber%20mais%20sobre%20o%20Flowoo." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <svg viewBox="0 0 32 32" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16.04 3C9.4 3 4 8.39 4 15.02c0 2.65.86 5.1 2.32 7.1L4.13 29l7.06-2.16a12.04 12.04 0 0 0 4.85 1.02h.01c6.64 0 12.03-5.39 12.03-12.02C28.08 8.39 22.68 3 16.04 3zm0 21.8h-.01c-1.5 0-2.97-.4-4.25-1.16l-.3-.18-3.6 1.1.96-3.5-.2-.32a9.86 9.86 0 0 1-1.5-5.24c0-5.45 4.45-9.88 9.92-9.88 2.65 0 5.14 1.03 7.01 2.9a9.81 9.81 0 0 1 2.9 6.99c0 5.45-4.45 9.88-9.91 9.88zm5.44-7.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.22 3.08.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.23 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35z"/>
+    </svg>
+  </a>
+
   <script>
+    // ===== MODAL =====
     function openModal() {
       document.getElementById('waitlistModal').classList.add('active');
       document.body.style.overflow = 'hidden';
     }
-
     function closeModal() {
       document.getElementById('waitlistModal').classList.remove('active');
       document.body.style.overflow = '';
@@ -855,69 +905,125 @@
         document.getElementById('fieldNome').value = '';
         document.getElementById('fieldEmail').value = '';
         document.getElementById('fieldProfissao').value = '';
-        document.getElementById('btnText').textContent = 'Quero meu acesso antecipado →';
+        document.getElementById('btnText').textContent = 'Criar conta e começar →';
         document.getElementById('submitBtn').disabled = false;
       }, 400);
     }
-
     async function submitForm() {
       const nome = document.getElementById('fieldNome').value.trim();
       const email = document.getElementById('fieldEmail').value.trim();
       const profissao = document.getElementById('fieldProfissao').value;
-
       if (!nome) { shakeFocus('fieldNome'); return; }
       if (!email || !email.includes('@')) { shakeFocus('fieldEmail'); return; }
       if (!profissao) { shakeFocus('fieldProfissao'); return; }
-
       const btn = document.getElementById('submitBtn');
       const btnText = document.getElementById('btnText');
-      btn.disabled = true;
-      btnText.textContent = 'Enviando...';
-
+      btn.disabled = true; btnText.textContent = 'Enviando...';
       try {
         const res = await fetch('https://formspree.io/f/xwvzjona', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify({ nome, email, profissao })
         });
-
         if (res.ok) {
           document.getElementById('modalForm').style.display = 'none';
           document.getElementById('modalSuccess').style.display = 'block';
-        } else {
-          btnText.textContent = 'Erro ao enviar. Tente novamente.';
-          btn.disabled = false;
-        }
-      } catch (e) {
-        btnText.textContent = 'Erro ao enviar. Tente novamente.';
-        btn.disabled = false;
-      }
+        } else { btnText.textContent = 'Erro ao enviar. Tente novamente.'; btn.disabled = false; }
+      } catch (e) { btnText.textContent = 'Erro ao enviar. Tente novamente.'; btn.disabled = false; }
     }
-
     function shakeFocus(id) {
       const el = document.getElementById(id);
-      el.style.borderColor = '#e05';
-      el.style.boxShadow = '0 0 0 3px rgba(220,0,80,0.12)';
+      el.style.borderColor = '#e05'; el.style.boxShadow = '0 0 0 3px rgba(220,0,80,0.12)';
       el.focus();
-      setTimeout(() => {
-        el.style.borderColor = '';
-        el.style.boxShadow = '';
-      }, 1800);
+      setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 1800);
+    }
+    document.getElementById('waitlistModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && document.getElementById('waitlistModal').classList.contains('active')) submitForm();
+    });
+    if (window.location.hash === '#comecar' || window.location.hash === '#testar') openModal();
+
+    // ===== CALCULADORA ROI =====
+    const PROFISSOES = {
+      psicologo: { label: "Psicólogo(a)", ticket: 150, sessoesSemana: 25 },
+      nutricionista: { label: "Nutricionista", ticket: 180, sessoesSemana: 20 },
+      fisioterapeuta: { label: "Fisioterapeuta", ticket: 120, sessoesSemana: 30 },
+      fono: { label: "Fonoaudiólogo(a)", ticket: 140, sessoesSemana: 22 },
+      to: { label: "Terapeuta Ocupacional", ticket: 140, sessoesSemana: 22 },
+      personal: { label: "Personal / Educador físico", ticket: 90, sessoesSemana: 30 },
+      outro: { label: "Outro profissional", ticket: 130, sessoesSemana: 24 },
+    };
+    const REDUCAO_ADMIN = 0.6;
+    const ECONOMIA_CONTADOR = 200;
+    const PACIENTES_RECUPERADOS_MES = 1;
+    const SESSOES_POR_PACIENTE_MES = 4;
+
+    const state = { prof: 'psicologo', ticket: 150, sessoes: 25, horas: 4, contador: 200 };
+    const fmtBRL = (n) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+
+    function renderChips() {
+      const wrap = document.getElementById('calcChips');
+      wrap.innerHTML = '';
+      Object.entries(PROFISSOES).forEach(([key, v]) => {
+        const b = document.createElement('button');
+        b.className = 'calc-chip' + (state.prof === key ? ' active' : '');
+        b.textContent = v.label;
+        b.onclick = () => {
+          state.prof = key; state.ticket = v.ticket; state.sessoes = v.sessoesSemana;
+          document.getElementById('ticket').value = v.ticket;
+          document.getElementById('sessoes').value = v.sessoesSemana;
+          syncSliders(); renderChips(); hideResult();
+        };
+        wrap.appendChild(b);
+      });
+    }
+    function fill(id) {
+      const el = document.getElementById(id);
+      const pct = ((el.value - el.min) / (el.max - el.min)) * 100;
+      el.style.background = `linear-gradient(90deg, #00c6ff ${pct}%, #1a2733 ${pct}%)`;
+    }
+    function syncSliders() {
+      document.getElementById('valTicket').textContent = fmtBRL(state.ticket);
+      document.getElementById('valSessoes').textContent = state.sessoes + ' sessões';
+      document.getElementById('valHoras').textContent = state.horas + 'h';
+      document.getElementById('valContador').textContent = fmtBRL(state.contador);
+      fill('ticket'); fill('sessoes'); fill('horas'); fill('contador');
+    }
+    function hideResult() { document.getElementById('calcResult').classList.remove('show'); }
+
+    ['ticket','sessoes','horas','contador'].forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener('input', () => {
+        state[id === 'ticket' ? 'ticket' : id === 'sessoes' ? 'sessoes' : id === 'horas' ? 'horas' : 'contador'] = Number(el.value);
+        syncSliders(); hideResult();
+      });
+    });
+
+    function calcular() {
+      const valorHora = state.ticket;
+      const horasRecuperadasMes = state.horas * REDUCAO_ADMIN * 4.33;
+      const economiaTempoMes = horasRecuperadasMes * valorHora;
+      const economiaContadorMes = Math.min(state.contador, ECONOMIA_CONTADOR);
+      const receitaProtegidaMes = PACIENTES_RECUPERADOS_MES * SESSOES_POR_PACIENTE_MES * state.ticket;
+      const totalMes = economiaTempoMes + economiaContadorMes + receitaProtegidaMes;
+
+      document.getElementById('bigNumber').innerHTML = fmtBRL(totalMes) + '<span class="per">/mês</span>';
+      document.getElementById('resultAno').textContent = '≈ ' + fmtBRL(totalMes * 12) + ' por ano';
+      document.getElementById('descTempo').textContent = '~' + Math.round(horasRecuperadasMes) + 'h/mês de volta pra atender ou descansar';
+      document.getElementById('valorTempo').textContent = '+' + fmtBRL(economiaTempoMes);
+      document.getElementById('valorContador').textContent = '+' + fmtBRL(economiaContadorMes);
+      document.getElementById('valorReceita').textContent = '+' + fmtBRL(receitaProtegidaMes);
+      document.getElementById('calcResult').classList.add('show');
     }
 
-    document.getElementById('waitlistModal').addEventListener('click', function(e) {
-      if (e.target === this) closeModal();
-    });
-
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Enter' && document.getElementById('waitlistModal').classList.contains('active')) {
-        submitForm();
-      }
-    });
-
-    if (window.location.hash === '#waitlist') openModal();
+    // init
+    document.getElementById('ticket').value = state.ticket;
+    document.getElementById('sessoes').value = state.sessoes;
+    document.getElementById('horas').value = state.horas;
+    document.getElementById('contador').value = state.contador;
+    renderChips();
+    syncSliders();
   </script>
 
 </body>
