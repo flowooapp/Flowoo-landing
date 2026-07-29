@@ -858,15 +858,7 @@
         <input type="range" id="horas" min="1" max="15" step="1" />
       </div>
 
-      <div class="calc-field">
-        <div class="slider-head">
-          <label class="calc-label" style="margin-bottom:0">Quanto paga de contador por mês</label>
-          <span class="slider-val" id="valContador"></span>
-        </div>
-        <input type="range" id="contador" min="0" max="600" step="20" />
-      </div>
-
-      <p style="color:var(--muted);font-size:0.9rem;margin:4px 0 14px;line-height:1.5;">Com seus números acima, veja quanto o Flowoo coloca de volta no seu caixa todo mês — em tempo recuperado, economia de contador e faturamento que você deixa de perder.</p>
+      <p style="color:var(--muted);font-size:0.9rem;margin:4px 0 14px;line-height:1.5;">Com seus números acima, veja quanto o Flowoo coloca de volta no seu caixa todo mês — em tempo recuperado e faturamento que você deixa de perder.</p>
       <button class="calc-cta" onclick="calcular()">Ver quanto eu ganho por mês →</button>
 
       <div class="calc-result" id="calcResult">
@@ -882,13 +874,6 @@
               <div class="b-desc" id="descTempo"></div>
             </div>
             <div class="b-valor" id="valorTempo"></div>
-          </div>
-          <div class="b-line">
-            <div>
-              <div class="b-titulo">Economia de contador</div>
-              <div class="b-desc">Receita Saúde / NFS-e e carnê-leão sem intermediário caro</div>
-            </div>
-            <div class="b-valor" id="valorContador"></div>
           </div>
           <div class="b-line destaque">
             <div>
@@ -1104,11 +1089,10 @@
       outro: { label: "Outro profissional", ticket: 130, sessoesSemana: 24 },
     };
     const REDUCAO_ADMIN = 0.6;
-    const ECONOMIA_CONTADOR = 200;
     const PACIENTES_RECUPERADOS_MES = 1;
     const SESSOES_POR_PACIENTE_MES = 4;
 
-    const state = { prof: 'psicologo', ticket: 150, sessoes: 25, horas: 4, contador: 200 };
+    const state = { prof: 'psicologo', ticket: 150, sessoes: 25, horas: 4 };
     const fmtBRL = (n) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
 
     function renderChips() {
@@ -1136,15 +1120,14 @@
       document.getElementById('valTicket').textContent = fmtBRL(state.ticket);
       document.getElementById('valSessoes').textContent = state.sessoes + ' sessões';
       document.getElementById('valHoras').textContent = state.horas + 'h';
-      document.getElementById('valContador').textContent = fmtBRL(state.contador);
-      fill('ticket'); fill('sessoes'); fill('horas'); fill('contador');
+      fill('ticket'); fill('sessoes'); fill('horas');
     }
     function hideResult() { document.getElementById('calcResult').classList.remove('show'); }
 
-    ['ticket','sessoes','horas','contador'].forEach(id => {
+    ['ticket','sessoes','horas'].forEach(id => {
       const el = document.getElementById(id);
       el.addEventListener('input', () => {
-        state[id === 'ticket' ? 'ticket' : id === 'sessoes' ? 'sessoes' : id === 'horas' ? 'horas' : 'contador'] = Number(el.value);
+        state[id === 'ticket' ? 'ticket' : id === 'sessoes' ? 'sessoes' : 'horas'] = Number(el.value);
         syncSliders(); hideResult();
       });
     });
@@ -1153,15 +1136,13 @@
       const valorHora = state.ticket;
       const horasRecuperadasMes = state.horas * REDUCAO_ADMIN * 4.33;
       const economiaTempoMes = horasRecuperadasMes * valorHora;
-      const economiaContadorMes = Math.min(state.contador, ECONOMIA_CONTADOR);
       const receitaProtegidaMes = PACIENTES_RECUPERADOS_MES * SESSOES_POR_PACIENTE_MES * state.ticket;
-      const totalMes = economiaTempoMes + economiaContadorMes + receitaProtegidaMes;
+      const totalMes = economiaTempoMes + receitaProtegidaMes;
 
       document.getElementById('bigNumber').innerHTML = fmtBRL(totalMes) + '<span class="per">/mês</span>';
       document.getElementById('resultAno').textContent = '≈ ' + fmtBRL(totalMes * 12) + ' por ano';
       document.getElementById('descTempo').textContent = '~' + Math.round(horasRecuperadasMes) + 'h/mês de volta pra atender ou descansar';
       document.getElementById('valorTempo').textContent = '+' + fmtBRL(economiaTempoMes);
-      document.getElementById('valorContador').textContent = '+' + fmtBRL(economiaContadorMes);
       document.getElementById('valorReceita').textContent = '+' + fmtBRL(receitaProtegidaMes);
       document.getElementById('calcResult').classList.add('show');
     }
@@ -1170,7 +1151,6 @@
     document.getElementById('ticket').value = state.ticket;
     document.getElementById('sessoes').value = state.sessoes;
     document.getElementById('horas').value = state.horas;
-    document.getElementById('contador').value = state.contador;
     renderChips();
     syncSliders();
 
